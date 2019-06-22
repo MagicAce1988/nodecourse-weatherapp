@@ -38,7 +38,7 @@ ip2location.fetch(req.query.ipadress, function(err, data){
         ip2location.fetch(req.query.ipadress, function(err, data){
             location=data.country_code
             location=countryToLang(location)
-
+        })
         // console.log(location+location)
     translate('You must provide a location.', {to: location}).then(data => {
         return res.send({
