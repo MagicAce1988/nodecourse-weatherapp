@@ -1,6 +1,10 @@
+const fs = require('fs')
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+const osLocale = require('os-locale')
+const translate = require('@vitalets/google-translate-api');
+
 const geoCode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 const app = express()
@@ -9,7 +13,7 @@ const port = process.env.PORT || 3000
 
 
 //create const path for handle bars views directory
-
+let location=''
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
 
@@ -24,6 +28,12 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('', (req,res)=>{
+    
+(async () => {
+    location = await osLocale()
+    location = location.split('-')
+    location = location[0]
+})();
     res.render('index',{
         title: 'Weather App',
         name: 'Marian Silviu'
@@ -47,16 +57,20 @@ app.get('/Help', (req,res)=>{
 
 
 app.get('/weather', (req,res)=>{
+    
     if (!req.query.adress) {
+    translate('Trebuie sa dai o locatie', {to: location}).then(data => {
         return res.send({
-            error:'You must provide an adress!'
+            error: data.text
         })
-    }
+    }).catch(err => {
+        console.log(err)
+    });
+    } else {
     
    const adress=req.query.adress
    const separated=adress.split(" ")
    const otherAdress=separated.filter((element)=>isNaN(element))
-   
     geoCode(otherAdress, (error,{latitude, longitude, nameplace, matchingPlaceName})=>{
         if (error) {
 
@@ -64,7 +78,7 @@ app.get('/weather', (req,res)=>{
 
             
         } else {
-                    forecast(latitude, longitude, (error,{summary,degrees,chanceOfRain})=> {
+                    forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
                         if (error) {
                             return res.send({error})
                         } else {
@@ -85,6 +99,7 @@ app.get('/weather', (req,res)=>{
                   }
             
 })
+}
 })
 
 app.get('/products', (req,res)=>{
