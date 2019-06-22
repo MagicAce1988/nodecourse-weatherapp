@@ -59,7 +59,7 @@ app.get('/weather', (req,res)=>{
     if (!req.query.adress) {
 
         // console.log(location+location)
-    translate('Trebuie sa dai o locatie', {to: location}).then(data => {
+    translate('You must provide a location.', {to: location}).then(data => {
         return res.send({
             error: data.text
         })
@@ -71,7 +71,7 @@ app.get('/weather', (req,res)=>{
             location=data.country_code
             location=countryToLang(location)
         })
-        translate('Te rog sa dai o adresa mai scurta.', {to: location}).then(data => {
+        translate('Please give a shorter adress.', {to: location}).then(data => {
             return res.send({
                 error: data.text
             })
