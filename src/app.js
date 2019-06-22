@@ -2,9 +2,9 @@ const fs = require('fs')
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
-const osLocale = require('os-locale')
+var ip2location = require('ip-to-location');
 const translate = require('@vitalets/google-translate-api');
-
+const countryToLang = require('./utils/countrytolang')
 const geoCode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 const app = express()
@@ -28,12 +28,6 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('', (req,res)=>{
-    
-(async () => {
-    location = await osLocale()
-    location = location.split('-')
-    location = location[0]
-})();
     res.render('index',{
         title: 'Weather App',
         name: 'Marian Silviu'
@@ -57,8 +51,14 @@ app.get('/Help', (req,res)=>{
 
 
 app.get('/weather', (req,res)=>{
+    ip2location.fetch(req.query.ipadress, function(err, data){
+        location=data.country_code
+        location=countryToLang(location)
+    })
     
     if (!req.query.adress) {
+
+        // console.log(location+location)
     translate('Trebuie sa dai o locatie', {to: location}).then(data => {
         return res.send({
             error: data.text

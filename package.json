@@ -8,6 +8,7 @@
     "chalk": "^2.4.2",
     "express": "^4.17.1",
     "hbs": "^4.0.4",
+    "ip-to-location": "^1.0.1",
     "iplocation": "^6.1.0",
     "os-locale": "^4.0.0",
     "request": "^2.88.0"
