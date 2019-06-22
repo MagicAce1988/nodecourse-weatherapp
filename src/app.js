@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000
 
 
 //create const path for handle bars views directory
-let location=''
+
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
 
@@ -27,35 +27,15 @@ hbs.registerPartials(partialsPath)
 
 app.use(express.static(path.join(__dirname, '../public')))
 
-app.get('', (req,res)=>{
-    location=''
-    res.render('index',{
-        title: 'Weather App',
-        name: 'Marian Silviu'
-    })
-})
 
-app.get('/about', (req,res)=>{
-    res.render('about',{
-        title: 'About Me',
-        name: 'Marian Silviu'
-    })
-})
-
-app.get('/Help', (req,res)=>{
-    res.render('help',{
-        help: "Please Help. I'm Stuck",
-        title: 'Help',
-        name: 'Marian Silviu'
-    })
-})
-
+let location=''
 
 app.get('/weather', (req,res)=>{
-    ip2location.fetch(req.query.ipadress, function(err, data){
-        location=data.country_code
-        location=countryToLang(location)
-    })
+    let location=''
+ip2location.fetch(req.query.ipadress, function(err, data){
+    location=data.country_code
+    location=countryToLang(location)
+})
     
     if (!req.query.adress) {
 
@@ -68,10 +48,6 @@ app.get('/weather', (req,res)=>{
         console.log(err)
     });
     } else if(req.query.adress.length>20){
-        ip2location.fetch(req.query.ipadress, function(err, data){
-            location=data.country_code
-            location=countryToLang(location)
-        })
         translate('Please give a shorter adress.', {to: location}).then(data => {
             return res.send({
                 error: data.text
@@ -116,18 +92,28 @@ app.get('/weather', (req,res)=>{
 }
 })
 
-app.get('/products', (req,res)=>{
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
 
-    }
-    console.log(req.query.search)
-    res.send({
-        products: []
+
+app.get('', (req,res)=>{
+    res.render('index',{
+        title: 'Weather App',
+        name: 'Marian Silviu'
     })
+})
 
+app.get('/about', (req,res)=>{
+    res.render('about',{
+        title: 'About Me',
+        name: 'Marian Silviu'
+    })
+})
+
+app.get('/Help', (req,res)=>{
+    res.render('help',{
+        help: "Please Help. I'm Stuck",
+        title: 'Help',
+        name: 'Marian Silviu'
+    })
 })
 
 app.get('/help/*', (req,res)=>{
