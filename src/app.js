@@ -56,38 +56,7 @@ app.get('/weather', (req,res)=>{
    const adress=req.query.adress
    const separated=adress.split(" ")
    const otherAdress=separated.filter((element)=>isNaN(element))
-//    const numberAdress=separated.filter((element)=>!isNaN(element))
-
-//    if (numberAdress.length===separated.length){
-//     geoCode(separated, (error,{latitude, longitude, nameplace, matchingPlaceName})=>{
-//         if (error) {
-
-//             return res.send({error})
-
-            
-//         } else {
-//                     forecast(latitude, longitude, (error,{summary,degrees,chanceOfRain})=> {
-//                         if (error) {
-//                             return res.send({error})
-//                         } else {
-//                             if (matchingPlaceName){
-//                                 res.send({location: matchingPlaceName,
-//                                     summary,
-//                                     degrees,
-//                                     chanceOfRain: chanceOfRain*100})
-                               
-//                             } else {
-//                                 res.send({location: nameplace,
-//                                     summary,
-//                                     degrees,
-//                                     chanceOfRain: chanceOfRain*100})
-//                             } 
-//                         }
-//               })
-//                   }
-            
-// })
-//    } else {
+   
     geoCode(otherAdress, (error,{latitude, longitude, nameplace, matchingPlaceName})=>{
         if (error) {
 
