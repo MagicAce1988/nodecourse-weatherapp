@@ -96,11 +96,11 @@ app.get('/weather', (req,res)=>{
 
             
         } else {
-            let text1='Pe moment temperatura este'
+            let text1='At the moment the temperature is'
             let text2='degrees Celsius'
-            let text3='Sansa de precipitatii este de'
+            let text3='The chance of precipitation is'
 
-            translate('Pe moment temperatura este', {to: location}).then(data => {
+            translate('At the moment the temperature is', {to: location}).then(data => {
                 text1=data.text
             }).catch(err => {
                 console.log(err)
@@ -110,7 +110,7 @@ app.get('/weather', (req,res)=>{
             }).catch(err => {
                 console.log(err)
             });
-            translate('Sansa de precipitatii este de', {to: location}).then(data => {
+            translate('The chance of precipitation is', {to: location}).then(data => {
                 text3=data.text
             }).catch(err => {
                 console.log(err)
