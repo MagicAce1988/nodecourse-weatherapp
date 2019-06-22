@@ -27,9 +27,6 @@ hbs.registerPartials(partialsPath)
 
 app.use(express.static(path.join(__dirname, '../public')))
 
-
-let location=''
-
 app.get('/weather', (req,res)=>{
     let location=''
 ip2location.fetch(req.query.ipadress, function(err, data){
@@ -38,6 +35,9 @@ ip2location.fetch(req.query.ipadress, function(err, data){
 })
     
     if (!req.query.adress) {
+        ip2location.fetch(req.query.ipadress, function(err, data){
+            location=data.country_code
+            location=countryToLang(location)
 
         // console.log(location+location)
     translate('You must provide a location.', {to: location}).then(data => {
