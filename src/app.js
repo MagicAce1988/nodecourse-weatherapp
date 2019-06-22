@@ -66,6 +66,19 @@ app.get('/weather', (req,res)=>{
     }).catch(err => {
         console.log(err)
     });
+    } else if(req.query.adress.length>20){
+        ip2location.fetch(req.query.ipadress, function(err, data){
+            location=data.country_code
+            location=countryToLang(location)
+        })
+        translate('Te rog sa dai o adresa mai scurta.', {to: location}).then(data => {
+            return res.send({
+                error: data.text
+            })
+        }).catch(err => {
+            console.log(err)
+        });
+
     } else {
     
    const adress=req.query.adress
