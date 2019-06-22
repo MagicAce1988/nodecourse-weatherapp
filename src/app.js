@@ -54,6 +54,10 @@ app.get('/weather', (req,res)=>{
     ip2location.fetch(req.query.ipadress, function(err, data){
         location=data.country_code
         location=countryToLang(location)
+
+        if (!location){
+            location='en'
+        }
         
     if (!req.query.adress) {
 
@@ -66,7 +70,7 @@ app.get('/weather', (req,res)=>{
         console.log(err)
     });
     } else if(req.query.adress.length>20){
-        translate('Please provide a shorter more concise adress.', {to: location}).then(data => {
+        translate('Please provide a shorter, more concise adress.', {to: location}).then(data => {
             return res.send({
                 error: data.text
             })
