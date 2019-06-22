@@ -86,10 +86,36 @@ app.get('/weather', (req,res)=>{
     geoCode(otherAdress, (error,{latitude, longitude, nameplace, matchingPlaceName})=>{
         if (error) {
 
-            return res.send({error})
+            translate(error, {to: location}).then(data => {
+                return res.send({
+                    error: data.text
+                })
+            }).catch(err => {
+                console.log(err)
+            });
 
             
         } else {
+            let text1='Pe moment temperatura este'
+            let text2='degrees Celsius'
+            let text3='Sansa de precipitatii este de'
+
+            translate('Pe moment temperatura este', {to: location}).then(data => {
+                text1=data.text
+            }).catch(err => {
+                console.log(err)
+            });
+            translate('degrees Celsius', {to: location}).then(data => {
+                text2=data.text
+            }).catch(err => {
+                console.log(err)
+            });
+            translate('Sansa de precipitatii este de', {to: location}).then(data => {
+                text3=data.text
+            }).catch(err => {
+                console.log(err)
+            });
+
                     forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
                         if (error) {
                             return res.send({error})
@@ -98,13 +124,21 @@ app.get('/weather', (req,res)=>{
                                 res.send({location: matchingPlaceName,
                                     summary,
                                     degrees,
-                                    chanceOfRain: chanceOfRain*100})
+                                    chanceOfRain: chanceOfRain*100,
+                                    text1,
+                                    text2,
+                                    text3
+                                })
                                
                             } else {
                                 res.send({location: nameplace,
                                     summary,
                                     degrees,
-                                    chanceOfRain: chanceOfRain*100})
+                                    chanceOfRain: chanceOfRain*100,
+                                    text1,
+                                    text2,
+                                    text3
+                                })
                             } 
                         }
               })

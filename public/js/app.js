@@ -35,7 +35,7 @@ weatherForm.addEventListener('submit',(e)=>{
         } else {
             messageOne.textContent=''
             messageTwo.textContent=data.location
-            messageThree.textContent=data.summary + '. Pe moment sunt ' + data.degrees + ' grade celsius. Sansa de a ploua este de ' + data.chanceOfRain + ' %.'
+            messageThree.textContent=data.summary + '. ' + data.text1 + ' ' + data.degrees + ' ' + data.text2 +'. ' + data.text3 + ' ' + data.chanceOfRain + ' %.'
         }
     })
 })
