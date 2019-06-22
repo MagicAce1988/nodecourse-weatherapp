@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000
 
 
 //create const path for handle bars views directory
-
+let location=''
 const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
 
@@ -27,20 +27,38 @@ hbs.registerPartials(partialsPath)
 
 app.use(express.static(path.join(__dirname, '../public')))
 
-app.get('/weather', (req,res)=>{
-    let location=''
-ip2location.fetch(req.query.ipadress, function(err, data){
-    location=data.country_code
-    location=countryToLang(location)
+app.get('', (req,res)=>{
+    res.render('index',{
+        title: 'Weather App',
+        name: 'Marian Silviu'
+    })
 })
-    
+
+app.get('/about', (req,res)=>{
+    res.render('about',{
+        title: 'About Me',
+        name: 'Marian Silviu'
+    })
+})
+
+app.get('/Help', (req,res)=>{
+    res.render('help',{
+        help: "Please Help. I'm Stuck",
+        title: 'Help',
+        name: 'Marian Silviu'
+    })
+})
+
+
+app.get('/weather', (req,res)=>{
+    ip2location.fetch(req.query.ipadress, function(err, data){
+        location=data.country_code
+        location=countryToLang(location)
+        
     if (!req.query.adress) {
-        ip2location.fetch(req.query.ipadress, function(err, data){
-            location=data.country_code
-            location=countryToLang(location)
-        })
+
         // console.log(location+location)
-    translate('You must provide a location.', {to: location}).then(data => {
+    translate('You have to give a location.', {to: location}).then(data => {
         return res.send({
             error: data.text
         })
@@ -48,7 +66,7 @@ ip2location.fetch(req.query.ipadress, function(err, data){
         console.log(err)
     });
     } else if(req.query.adress.length>20){
-        translate('Please give a shorter adress.', {to: location}).then(data => {
+        translate('Please provide a shorter more concise adress.', {to: location}).then(data => {
             return res.send({
                 error: data.text
             })
@@ -90,30 +108,22 @@ ip2location.fetch(req.query.ipadress, function(err, data){
             
 })
 }
+    })
+    
 })
 
+app.get('/products', (req,res)=>{
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term'
+        })
 
-
-app.get('', (req,res)=>{
-    res.render('index',{
-        title: 'Weather App',
-        name: 'Marian Silviu'
+    }
+    console.log(req.query.search)
+    res.send({
+        products: []
     })
-})
 
-app.get('/about', (req,res)=>{
-    res.render('about',{
-        title: 'About Me',
-        name: 'Marian Silviu'
-    })
-})
-
-app.get('/Help', (req,res)=>{
-    res.render('help',{
-        help: "Please Help. I'm Stuck",
-        title: 'Help',
-        name: 'Marian Silviu'
-    })
 })
 
 app.get('/help/*', (req,res)=>{
