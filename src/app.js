@@ -28,6 +28,7 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('', (req,res)=>{
+    location=''
     res.render('index',{
         title: 'Weather App',
         name: 'Marian Silviu'
