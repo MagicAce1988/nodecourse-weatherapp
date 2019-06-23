@@ -55,11 +55,9 @@ app.get('/Help', (req,res)=>{
 app.get('/weather', (req,res)=>{
         const ipObject=req.ip
         let countrycode=''
-        ip2location.fetch(ipObject, function(err, res){
-            countrycode=res.country_code
-        })
-        // location=req.ipInfo.country
-        location=countryToLang(countrycode)
+        ip2location.fetch(ipObject, function(err, resp){
+            countrycode=resp.country_code
+            location=countryToLang(countrycode)
 
         if (!location){
             location='en'
@@ -150,6 +148,99 @@ app.get('/weather', (req,res)=>{
             
 })
 }
+        })
+        // location=req.ipInfo.country
+//         location=countryToLang(countrycode)
+
+//         if (!location){
+//             location='en'
+//         }
+        
+//     if (!req.query.adress) {
+//     translate('You have to give a location.', {to: location}).then(data => {
+//         return res.send({
+//             error: data.text
+//         })
+//     }).catch(err => {
+//         console.log(err)
+//     });
+//     } else if(req.query.adress.length>20){
+//         translate('You must give a shorter location.', {to: location}).then(data => {
+//             return res.send({
+//                 error: data.text
+//             })
+//         }).catch(err => {
+//             console.log(err)
+//         });
+
+//     } else {
+    
+//    const adress=req.query.adress
+//    const separated=adress.split(" ")
+//    const otherAdress=separated.filter((element)=>isNaN(element))
+//     geoCode(otherAdress, (error,{latitude, longitude, nameplace, matchingPlaceName})=>{
+//         if (error) {
+
+//             translate(error, {to: location}).then(data => {
+//                 return res.send({
+//                     error: data.text
+//                 })
+//             }).catch(err => {
+//                 console.log(err)
+//             });
+
+            
+//         } else {
+//             let text1=''
+//             let text2=''
+//             let text3=''
+
+//             translate('The temperature is:', {to: location}).then(data => {
+//                 text1=data.text
+//                 translate('degrees Celsius', {to: location}).then(data => {
+//                     text2=data.text
+//                     translate('The chance of precipitation is:', {to: location}).then(data => {
+//                         text3=data.text
+//                         forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
+//                             if (error) {
+//                                 return res.send({error})
+//                             } else {
+//                                 if (matchingPlaceName){
+//                                     res.send({location: matchingPlaceName,
+//                                         summary,
+//                                         degrees,
+//                                         chanceOfRain: chanceOfRain*100,
+//                                         text1,
+//                                         text2,
+//                                         text3
+//                                     })
+                                   
+//                                 } else {
+//                                     res.send({location: nameplace,
+//                                         summary,
+//                                         degrees,
+//                                         chanceOfRain: chanceOfRain*100,
+//                                         text1,
+//                                         text2,
+//                                         text3,
+//                                     })
+//                                 } 
+//                             }
+//                   })
+                        
+//                     }).catch(err => {
+//                         console.log(err)
+//                     });
+//                 }).catch(err => {
+//                     console.log(err)
+//                 });
+//             }).catch(err => {
+//                 console.log(err)
+//             });
+//                   }
+            
+// })
+// }
     })
     
 app.get('/help/*', (req,res)=>{
