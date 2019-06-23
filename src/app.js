@@ -53,10 +53,10 @@ app.get('/Help', (req,res)=>{
 
 app.get('/weather', (req,res)=>{
         location=req.ipInfo.country
-        location=countryToLang(location)
-        if (location[0]===location[0].toUpperCase()){
-            location='en'
+        if (location[0]!=location[0].toUpperCase()){
+            location='US'
         }
+        location=countryToLang(location)
 
         if (!location){
             location='en'
