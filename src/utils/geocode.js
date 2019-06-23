@@ -6,7 +6,7 @@ const geoCode = (adress,callback)=>{
         if (error) {
             return callback('Unable to connect to geocoding services.',{})
         } else if (response.body.features.length===0) {
-            return callback('Please provide a valid location!',{})
+            return callback('Please give a valid location!',{})
         } else {
             const {center ,place_name:nameplace,matching_place_name:matchingPlaceName}=response.body.features[0]
             callback(undefined,{

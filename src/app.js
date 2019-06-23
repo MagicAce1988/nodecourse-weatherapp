@@ -68,7 +68,7 @@ app.get('/weather', (req,res)=>{
         console.log(err)
     });
     } else if(req.query.adress.length>20){
-        translate('Please provide a shorter, more concise adress.', {to: location}).then(data => {
+        translate('Please give a shorter, more concise adress.', {to: location}).then(data => {
             return res.send({
                 error: data.text
             })
