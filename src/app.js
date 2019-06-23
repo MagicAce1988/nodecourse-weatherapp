@@ -58,6 +58,26 @@ app.get('/weather', (req,res)=>{
         if (!location){
             location='en'
         }
+
+        let text1=''
+        let text2=''
+        let text3=''
+
+        translate('At the moment the temperature is', {to: location}).then(data => {
+            text1=data.text
+        }).catch(err => {
+            console.log(err)
+        });
+        translate('degrees Celsius', {to: location}).then(data => {
+            text2=data.text
+        }).catch(err => {
+            console.log(err)
+        });
+        translate('The chance of precipitation is', {to: location}).then(data => {
+            text3=data.text
+        }).catch(err => {
+            console.log(err)
+        });
         
     if (!req.query.adress) {
     translate('You have to give a location.', {to: location}).then(data => {
@@ -94,25 +114,6 @@ app.get('/weather', (req,res)=>{
 
             
         } else {
-            let text1=''
-            let text2=''
-            let text3=''
-
-            translate('At the moment the temperature is', {to: location}).then(data => {
-                text1=data.text
-            }).catch(err => {
-                console.log(err)
-            });
-            translate('degrees Celsius', {to: location}).then(data => {
-                text2=data.text
-            }).catch(err => {
-                console.log(err)
-            });
-            translate('The chance of precipitation is', {to: location}).then(data => {
-                text3=data.text
-            }).catch(err => {
-                console.log(err)
-            });
 
                     forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
                         if (error) {
