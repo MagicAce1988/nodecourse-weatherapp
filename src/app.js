@@ -115,7 +115,8 @@ app.get('/weather', (req,res)=>{
                                         chanceOfRain: chanceOfRain*100,
                                         text1,
                                         text2,
-                                        text3
+                                        text3,
+                                        location
                                     })
                                    
                                 } else {
@@ -125,7 +126,7 @@ app.get('/weather', (req,res)=>{
                                         chanceOfRain: chanceOfRain*100,
                                         text1,
                                         text2,
-                                        text3
+                                        text3,location
                                     })
                                 } 
                             }
