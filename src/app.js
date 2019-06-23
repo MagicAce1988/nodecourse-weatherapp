@@ -98,11 +98,11 @@ app.get('/weather', (req,res)=>{
             let text2=''
             let text3=''
 
-            translate('The temperature is', {to: location}).then(data => {
+            translate('The temperature is:', {to: location}).then(data => {
                 text1=data.text
                 translate('degrees Celsius', {to: location}).then(data => {
                     text2=data.text
-                    translate('The chance of precipitation is', {to: location}).then(data => {
+                    translate('The chance of precipitation is:', {to: location}).then(data => {
                         text3=data.text
                         forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
                             if (error) {
