@@ -3,6 +3,7 @@ const expressip = require('express-ip');
 const path = require('path')
 const hbs = require('hbs')
 const translate = require('@vitalets/google-translate-api');
+var ip2location = require('ip-to-location');
 const countryToLang = require('./utils/countrytolang')
 const geoCode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
@@ -52,8 +53,13 @@ app.get('/Help', (req,res)=>{
 
 
 app.get('/weather', (req,res)=>{
-        location=req.ipInfo.country
-        location=countryToLang(location)
+        const ipObject=req.ip
+        let countrycode=''
+        ip2location.fetch('209.58.139.51', function(err, res){
+            countrycode=res.country_code
+        })
+        // location=req.ipInfo.country
+        location=countryToLang(countrycode)
 
         if (!location){
             location='en'
@@ -115,8 +121,7 @@ app.get('/weather', (req,res)=>{
                                         chanceOfRain: chanceOfRain*100,
                                         text1,
                                         text2,
-                                        text3,
-                                        locationCountry: location
+                                        text3
                                     })
                                    
                                 } else {
@@ -127,7 +132,6 @@ app.get('/weather', (req,res)=>{
                                         text1,
                                         text2,
                                         text3,
-                                        locationCountry: location
                                     })
                                 } 
                             }
@@ -142,56 +146,12 @@ app.get('/weather', (req,res)=>{
             }).catch(err => {
                 console.log(err)
             });
-            
-
-            //         forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
-            //             if (error) {
-            //                 return res.send({error})
-            //             } else {
-            //                 if (matchingPlaceName){
-            //                     res.send({location: matchingPlaceName,
-            //                         summary,
-            //                         degrees,
-            //                         chanceOfRain: chanceOfRain*100,
-            //                         text1,
-            //                         text2,
-            //                         text3
-            //                     })
-                               
-            //                 } else {
-            //                     res.send({location: nameplace,
-            //                         summary,
-            //                         degrees,
-            //                         chanceOfRain: chanceOfRain*100,
-            //                         text1,
-            //                         text2,
-            //                         text3
-            //                     })
-            //                 } 
-            //             }
-            //   })
                   }
             
 })
 }
     })
     
-// })
-
-app.get('/products', (req,res)=>{
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
-
-    }
-    console.log(req.query.search)
-    res.send({
-        products: []
-    })
-
-})
-
 app.get('/help/*', (req,res)=>{
     res.render('404',{
         error: '- Help article not found.',
