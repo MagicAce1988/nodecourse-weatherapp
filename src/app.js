@@ -100,46 +100,74 @@ app.get('/weather', (req,res)=>{
 
             translate('At the moment the temperature is', {to: location}).then(data => {
                 text1=data.text
-            }).catch(err => {
-                console.log(err)
-            });
-            translate('degrees Celsius', {to: location}).then(data => {
-                text2=data.text
-            }).catch(err => {
-                console.log(err)
-            });
-            translate('The chance of precipitation is', {to: location}).then(data => {
-                text3=data.text
-            }).catch(err => {
-                console.log(err)
-            });
-
-                    forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
-                        if (error) {
-                            return res.send({error})
-                        } else {
-                            if (matchingPlaceName){
-                                res.send({location: matchingPlaceName,
-                                    summary,
-                                    degrees,
-                                    chanceOfRain: chanceOfRain*100,
-                                    text1,
-                                    text2,
-                                    text3
-                                })
-                               
+                translate('degrees Celsius', {to: location}).then(data => {
+                    text2=data.text
+                    translate('The chance of precipitation is', {to: location}).then(data => {
+                        text3=data.text
+                        forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
+                            if (error) {
+                                return res.send({error})
                             } else {
-                                res.send({location: nameplace,
-                                    summary,
-                                    degrees,
-                                    chanceOfRain: chanceOfRain*100,
-                                    text1,
-                                    text2,
-                                    text3
-                                })
-                            } 
-                        }
-              })
+                                if (matchingPlaceName){
+                                    res.send({location: matchingPlaceName,
+                                        summary,
+                                        degrees,
+                                        chanceOfRain: chanceOfRain*100,
+                                        text1,
+                                        text2,
+                                        text3
+                                    })
+                                   
+                                } else {
+                                    res.send({location: nameplace,
+                                        summary,
+                                        degrees,
+                                        chanceOfRain: chanceOfRain*100,
+                                        text1,
+                                        text2,
+                                        text3
+                                    })
+                                } 
+                            }
+                  })
+                        
+                    }).catch(err => {
+                        console.log(err)
+                    });
+                }).catch(err => {
+                    console.log(err)
+                });
+            }).catch(err => {
+                console.log(err)
+            });
+            
+
+            //         forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
+            //             if (error) {
+            //                 return res.send({error})
+            //             } else {
+            //                 if (matchingPlaceName){
+            //                     res.send({location: matchingPlaceName,
+            //                         summary,
+            //                         degrees,
+            //                         chanceOfRain: chanceOfRain*100,
+            //                         text1,
+            //                         text2,
+            //                         text3
+            //                     })
+                               
+            //                 } else {
+            //                     res.send({location: nameplace,
+            //                         summary,
+            //                         degrees,
+            //                         chanceOfRain: chanceOfRain*100,
+            //                         text1,
+            //                         text2,
+            //                         text3
+            //                     })
+            //                 } 
+            //             }
+            //   })
                   }
             
 })
