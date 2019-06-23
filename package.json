@@ -7,6 +7,7 @@
     "@vitalets/google-translate-api": "^2.8.0",
     "chalk": "^2.4.2",
     "express": "^4.17.1",
+    "express-ip": "^1.0.3",
     "hbs": "^4.0.4",
     "ip-to-location": "^1.0.1",
     "iplocation": "^6.1.0",

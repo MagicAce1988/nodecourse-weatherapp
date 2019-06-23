@@ -1,5 +1,6 @@
 const fs = require('fs')
 const express = require('express')
+const expressip = require('express-ip');
 const path = require('path')
 const hbs = require('hbs')
 var ip2location = require('ip-to-location');
@@ -18,7 +19,9 @@ const viewsPath = path.join(__dirname,'../templates/views')
 const partialsPath = path.join(__dirname,'../templates/partials')
 
 //Set up handle bars engine and views location
+app.use(expressip().getIpInfoMiddleware);
 
+app.set("PORT", port);
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
@@ -51,7 +54,7 @@ app.get('/Help', (req,res)=>{
 
 
 app.get('/weather', (req,res)=>{
-    ip2location.fetch(req.query.ipadress, function(err, data){
+    ip2location.fetch(req.ipInfo, function(err, data){
         location=data.country_code
         location=countryToLang(location)
 
@@ -62,7 +65,7 @@ app.get('/weather', (req,res)=>{
     if (!req.query.adress) {
 
         // console.log(location+location)
-    translate('You have to give a location.', {to: location}).then(data => {
+    translate('You must give a location.', {to: location}).then(data => {
         return res.send({
             error: data.text
         })
