@@ -94,9 +94,9 @@ app.get('/weather', (req,res)=>{
 
             
         } else {
-            let text1='At the moment the temperature is'
-            let text2='degrees Celsius'
-            let text3='The chance of precipitation is'
+            let text1=''
+            let text2=''
+            let text3=''
 
             translate('At the moment the temperature is', {to: location}).then(data => {
                 text1=data.text
