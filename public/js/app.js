@@ -25,6 +25,7 @@ weatherForm.addEventListener('submit',(e)=>{
             messageOne.textContent=''
             messageTwo.textContent=data.location
             messageThree.textContent=data.summary + '. ' + data.text1 + ' ' + data.degrees + ' ' + data.text2 +'. ' + data.text3 + ' ' + data.chanceOfRain + ' %.'
+            messageThree.innerHTML=data.summary + '. ' + data.text1 + ' ' + data.degrees + ' ' + data.text2 +'. ' + data.text3 + ' ' + data.chanceOfRain + ' %.'
         }
     })
 })
