@@ -98,7 +98,7 @@ app.get('/weather', (req,res)=>{
             let text2=''
             let text3=''
 
-            translate('At the moment the temperature is', {to: location}).then(data => {
+            translate('The temperature is', {to: location}).then(data => {
                 text1=data.text
                 translate('degrees Celsius', {to: location}).then(data => {
                     text2=data.text
