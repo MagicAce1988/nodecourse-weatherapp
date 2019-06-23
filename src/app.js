@@ -1,9 +1,7 @@
-const fs = require('fs')
 const express = require('express')
 const expressip = require('express-ip');
 const path = require('path')
 const hbs = require('hbs')
-var ip2location = require('ip-to-location');
 const translate = require('@vitalets/google-translate-api');
 const countryToLang = require('./utils/countrytolang')
 const geoCode = require('./utils/geocode')
@@ -54,7 +52,6 @@ app.get('/Help', (req,res)=>{
 
 
 app.get('/weather', (req,res)=>{
-    // ip2location.fetch(req.ipInfo, function(err, data){
         location=req.ipInfo.country
         location=countryToLang(location)
 
@@ -63,8 +60,6 @@ app.get('/weather', (req,res)=>{
         }
         
     if (!req.query.adress) {
-
-        // console.log(location+location)
     translate('You have to give a location.', {to: location}).then(data => {
         return res.send({
             error: data.text
