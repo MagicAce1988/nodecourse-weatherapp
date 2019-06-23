@@ -55,7 +55,7 @@ app.get('/Help', (req,res)=>{
 app.get('/weather', (req,res)=>{
         const ipObject=req.ip
         let countrycode=''
-        ip2location.fetch('209.58.139.51', function(err, res){
+        ip2location.fetch(ipObject, function(err, res){
             countrycode=res.country_code
         })
         // location=req.ipInfo.country
