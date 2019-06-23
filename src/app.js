@@ -54,8 +54,8 @@ app.get('/Help', (req,res)=>{
 
 
 app.get('/weather', (req,res)=>{
-    ip2location.fetch(req.ipInfo, function(err, data){
-        location=data.country_code
+    // ip2location.fetch(req.ipInfo, function(err, data){
+        location=req.ipInfo.country
         location=countryToLang(location)
 
         if (!location){
@@ -65,7 +65,7 @@ app.get('/weather', (req,res)=>{
     if (!req.query.adress) {
 
         // console.log(location+location)
-    translate('You must give a location.', {to: location}).then(data => {
+    translate('You have to give a location.', {to: location}).then(data => {
         return res.send({
             error: data.text
         })
@@ -151,7 +151,7 @@ app.get('/weather', (req,res)=>{
 }
     })
     
-})
+// })
 
 app.get('/products', (req,res)=>{
     if (!req.query.search) {
