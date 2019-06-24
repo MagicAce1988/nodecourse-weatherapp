@@ -144,55 +144,12 @@ app.get('/weather', (req,res)=>{
                 console.log(err)
             });
             
-
-            //         forecast(latitude, longitude, location, (error,{summary,degrees,chanceOfRain})=> {
-            //             if (error) {
-            //                 return res.send({error})
-            //             } else {
-            //                 if (matchingPlaceName){
-            //                     res.send({location: matchingPlaceName,
-            //                         summary,
-            //                         degrees,
-            //                         chanceOfRain: chanceOfRain*100,
-            //                         text1,
-            //                         text2,
-            //                         text3
-            //                     })
-                               
-            //                 } else {
-            //                     res.send({location: nameplace,
-            //                         summary,
-            //                         degrees,
-            //                         chanceOfRain: chanceOfRain*100,
-            //                         text1,
-            //                         text2,
-            //                         text3
-            //                     })
-            //                 } 
-            //             }
-            //   })
                   }
             
 })
 }
     })
     
-// })
-
-app.get('/products', (req,res)=>{
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
-
-    }
-    console.log(req.query.search)
-    res.send({
-        products: []
-    })
-
-})
-
 app.get('/help/*', (req,res)=>{
     res.render('404',{
         error: '- Help article not found.',
